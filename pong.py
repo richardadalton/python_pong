@@ -1,67 +1,40 @@
-import pygame
-import sys
-from pygame.locals import *
+from paddle import Paddle, paddle_size
 
-white = 255, 255, 255
-width, height = 1000, 500
+width_of_court = 1000
+height_of_court = 500
+paddle_start_y = (height_of_court / 2) - (paddle_size / 2)
+paddle_upper_limit = 0
+paddle_lower_limit = height_of_court - paddle_size
 
-b1x, b1y = 20, 250
+class Pong:
 
-x, y = 40, 250
-vx, vy = 5, 5
+    def __init__(self):
+        self.leftPaddle = Paddle(20, 210)
+        self.rightPaddle = Paddle(970, 210)
 
-
-
-
-def clear_screen(screen):
-    screen.fill((0, 0, 0))
-
-def draw_ball(screen):
-    rectangle = (x, y, 20, 20)
-    pygame.draw.rect(screen, white, rectangle)
+    def moveLeftUp(self):
+        if self.leftPaddle.y > 0:
+            self.leftPaddle.moveUp()
 
 
-def draw_bat(screen):
-    rectangle = (b1x, b1y, 10, 80)
-    pygame.draw.rect(screen, white, rectangle)
+    def moveLeftDown(self):
+        if self.leftPaddle.y < (500 - 80):
+            self.leftPaddle.moveDown()
 
 
-def refresh_screen(screen, width, height):
-    clear_screen(screen)
-    draw_ball(screen)
-    draw_bat(screen)
-    pygame.display.update()
+    def moveLeftTo(self, y):
+        self.leftPaddle.moveTo(y)
 
 
-
-pygame.init()
-blip = pygame.mixer.Sound('pongblipf4.wav')
-
-screen = pygame.display.set_mode((width, height))
-
-clock = pygame.time.Clock()
-
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            sys.exit()
-    x += vx
-    y += vy
-
-    if x < 10 and y < (b1y + 80) and y > b1y:
-        vx = -vx
-    elif x > (width - 20):
-        vx = -vx
-        blip.play()
-    elif y < 0 or y > (height - 20):
-        vy = -vy
-        blip.play()
+    def moveRightUp(self):
+        if self.rightPaddle.y > 0:
+            self.rightPaddle.moveUp()
 
 
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_UP]:
-        b1y -= 5
-    if keys[pygame.K_DOWN]:
-        b1y += 5
+    def moveRightDown(self):
+        if self.rightPaddle.y < (500 - 80):
+            self.rightPaddle.moveDown()
 
-    refresh_screen(screen, width, height)
+
+    def moveRightTo(self, y):
+        self.rightPaddle.moveTo(y)
