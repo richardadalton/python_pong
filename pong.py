@@ -1,40 +1,69 @@
-from paddle import Paddle, paddle_size
-
-width_of_court = 1000
-height_of_court = 500
-paddle_start_y = (height_of_court / 2) - (paddle_size / 2)
-paddle_upper_limit = 0
-paddle_lower_limit = height_of_court - paddle_size
+from config import Config
+from ball import Ball
+from paddle import Paddle
 
 class Pong:
+    def __init__(self, hit_wall_sound, hit_paddle_sound):
+        self.leftPaddle = Paddle(Config.paddle_left_start_x, Config.paddle_left_start_y)
+        self.rightPaddle = Paddle(Config.paddle_right_start_x, Config.paddle_right_start_y)
+        self.ball = Ball(Config.ball_left_start_x, Config.ball_left_start_y)
+        self.left_score = 0
+        self.right_score = 0
+        self.serve = self.serve_left
+        self.hit_wall_sound = hit_wall_sound
+        self.hit_paddle_sound = hit_paddle_sound
 
-    def __init__(self):
-        self.leftPaddle = Paddle(20, 210)
-        self.rightPaddle = Paddle(970, 210)
-
-    def moveLeftUp(self):
+    def move_left_up(self):
         if self.leftPaddle.y > 0:
-            self.leftPaddle.moveUp()
+            self.leftPaddle.move_up()
 
-
-    def moveLeftDown(self):
+    def move_left_down(self):
         if self.leftPaddle.y < (500 - 80):
-            self.leftPaddle.moveDown()
+            self.leftPaddle.move_down()
 
-
-    def moveLeftTo(self, y):
-        self.leftPaddle.moveTo(y)
-
-
-    def moveRightUp(self):
+    def move_right_up(self):
         if self.rightPaddle.y > 0:
-            self.rightPaddle.moveUp()
+            self.rightPaddle.move_up()
 
-
-    def moveRightDown(self):
+    def move_right_down(self):
         if self.rightPaddle.y < (500 - 80):
-            self.rightPaddle.moveDown()
+            self.rightPaddle.move_down()
+
+    def serve_left(self):
+        self.ball = Ball(Config.ball_left_start_x, Config.ball_left_start_y, Config.ball_serve_left_vx, Config.ball_serve_left_vy)
+        self.serve = self.in_play
+
+    def serve_right(self):
+        self.ball = Ball(Config.ball_right_start_x, Config.ball_right_start_y, Config.ball_serve_right_vx, Config.ball_serve_right_vy)
+        self.serve = self.in_play
+
+    def in_play(self):
+        pass
+
+    def move_ball(self):
+        if self.ball.y == 0 or self.ball.y == 480:
+            self.ball.bounce_off_wall()
+            self.hit_wall_sound.play()
+
+        if self.ball.x == 30 and self.leftPaddle.y <= self.ball.y <= (self.leftPaddle.y + self.leftPaddle.size):
+            self.ball.bounce_off_paddle()
+            self.hit_paddle_sound.play()
+
+        if self.ball.x == 960 and self.rightPaddle.y <= self.ball.y <= (self.rightPaddle.y + self.rightPaddle.size):
+            self.ball.bounce_off_paddle()
+            self.hit_paddle_sound.play()
+
+        if self.ball.x < 0:
+            self.ball = Ball(Config.ball_left_start_x, Config.ball_left_start_y, 0, 0)
+            self.serve = self.serve_left
+            self.right_score += 1
+
+        if self.ball.x > 1000:
+            self.ball = Ball(Config.ball_right_start_x, Config.ball_right_start_y, 0, 0)
+            self.serve = self.serve_right
+            self.left_score += 1
+
+        self.ball.move()
 
 
-    def moveRightTo(self, y):
-        self.rightPaddle.moveTo(y)
+
