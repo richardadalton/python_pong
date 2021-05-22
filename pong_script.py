@@ -39,3 +39,4 @@ while True:
 
     pong.move_ball()
     draw_pong(screen, pong)
+    pygame.time.delay(3)
