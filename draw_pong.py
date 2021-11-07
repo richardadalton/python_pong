@@ -1,7 +1,7 @@
 import pygame
 
 white = 255, 255, 255
-
+red = 255, 0, 0
 
 def clear_screen(screen):
     screen.fill((0, 0, 0))
@@ -13,22 +13,10 @@ def draw_court(screen):
     pygame.draw.rect(screen, white, rectangle)
 
 
-# Ball
-def draw_ball(screen, ball):
-    rectangle = (ball.x, ball.y, 20, 20)
-    pygame.draw.rect(screen, white, rectangle)
-
-
-# Paddles
-def draw_paddle(screen, paddle):
-    rectangle = (paddle.x, paddle.y, 10, paddle.size)
-    pygame.draw.rect(screen, white, rectangle)
-
 
 def draw_paddles(screen, pong):
-    draw_paddle(screen, pong.leftPaddle)
-    draw_paddle(screen, pong.rightPaddle)
-
+    pong.leftPaddle.draw(screen, white)
+    pong.rightPaddle.draw(screen, white)
 
 # Score
 def draw_score(screen, pong):
@@ -41,7 +29,6 @@ def draw_score(screen, pong):
 
     top_right = (30, 0, 10, 40)
     bottom_right = (30, 40, 10, 40)
-
 
     segments = [top, middle, bottom, top_left, top_right, bottom_left, bottom_right]
 
@@ -78,7 +65,7 @@ def draw_score(screen, pong):
 def draw_pong(screen, pong):
     clear_screen(screen)
     draw_court(screen)
-    draw_ball(screen, pong.ball)
+    pong.ball.draw(screen, white)
     draw_paddles(screen, pong)
     draw_score(screen, pong)
     pygame.display.update()

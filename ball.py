@@ -1,11 +1,10 @@
-ball_size = 20
-ball_step_size = 5
-
+import pygame
 
 class Ball:
-    def __init__(self, x, y, vx=ball_step_size, vy=ball_step_size):
+    def __init__(self, x, y, size, vx=5, vy=5):
         self.x = x
         self.y = y
+        self.size = size
         self.vx = vx
         self.vy = vy
 
@@ -18,3 +17,7 @@ class Ball:
     def move(self):
         self.x += self.vx
         self.y += self.vy
+
+    def draw(self, screen, color):
+        rectangle = (self.x - self.size/2, self.y - self.size/2, self.size, self.size)
+        pygame.draw.rect(screen, color, rectangle)

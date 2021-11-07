@@ -26,17 +26,15 @@ while True:
     if keys[pygame.K_a]:
         pong.move_left_down()
 
-
     if keys[pygame.K_p]:
         pong.move_right_up()
 
     if keys[pygame.K_l]:
         pong.move_right_down()
 
-
     if keys[pygame.K_SPACE]:
         pong.serve()
 
     pong.move_ball()
     draw_pong(screen, pong)
-    pygame.time.delay(3)
+    pygame.time.delay(15)
