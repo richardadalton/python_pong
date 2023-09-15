@@ -1,4 +1,4 @@
-class Config():
+class Config:
     ball_left_start_x = 40
     ball_left_start_y = 240
     ball_right_start_x = 940

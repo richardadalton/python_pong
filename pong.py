@@ -61,11 +61,11 @@ class Pong:
             self.ball.bounce_off_wall()
             self.hit_wall_sound.play()
 
-        if self.ball.x == 30 and abs(self.leftPaddle.y - self.ball.y) < self.leftPaddle.size / 2:
+        if self.ball.x == 30 and abs(self.leftPaddle.y - self.ball.y) <= self.leftPaddle.size / 2:
             self.ball.bounce_off_paddle()
             self.hit_paddle_sound.play()
 
-        if self.ball.x == 970 and abs(self.rightPaddle.y - self.ball.y) < self.rightPaddle.size / 2:
+        if self.ball.x == 970 and abs(self.rightPaddle.y - self.ball.y) <= self.rightPaddle.size / 2:
             self.ball.bounce_off_paddle()
             self.hit_paddle_sound.play()
 

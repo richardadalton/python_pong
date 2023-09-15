@@ -13,10 +13,10 @@ def draw_court(screen):
     pygame.draw.rect(screen, white, rectangle)
 
 
-
 def draw_paddles(screen, pong):
     pong.leftPaddle.draw(screen, white)
     pong.rightPaddle.draw(screen, white)
+
 
 # Score
 def draw_score(screen, pong):
@@ -29,8 +29,6 @@ def draw_score(screen, pong):
 
     top_right = (30, 0, 10, 40)
     bottom_right = (30, 40, 10, 40)
-
-    segments = [top, middle, bottom, top_left, top_right, bottom_left, bottom_right]
 
     digits = [
         [top, bottom, top_left, top_right, bottom_left, bottom_right],  # Zero
@@ -45,14 +43,12 @@ def draw_score(screen, pong):
         [top, middle, bottom, top_left, top_right, bottom_right],  # Eight
     ]
 
-
     x_offset = 400
     y_offset = 50
     for segment in digits[pong.left_score]:
         (x, y, width, height) = segment
         offset_segment = (x + x_offset, y + y_offset, width, height)
         pygame.draw.rect(screen, white, offset_segment)
-
 
     x_offset = 560
     y_offset = 50
@@ -61,7 +57,6 @@ def draw_score(screen, pong):
         offset_segment = (x + x_offset, y + y_offset, width, height)
         pygame.draw.rect(screen, white, offset_segment)
 
-
 def draw_pong(screen, pong):
     clear_screen(screen)
     draw_court(screen)
@@ -69,5 +64,3 @@ def draw_pong(screen, pong):
     draw_paddles(screen, pong)
     draw_score(screen, pong)
     pygame.display.update()
-
-

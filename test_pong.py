@@ -6,10 +6,7 @@ from ball import Ball
 import pygame
 
 
-
 class TestPong(unittest.TestCase):
-
-
 
     def setUp(self):
         pygame.init()
@@ -60,9 +57,9 @@ class TestPong(unittest.TestCase):
         hit_paddle = pygame.mixer.Sound('pong_wall.wav')
         pong = Pong(hit_wall, hit_paddle)
 
-        pong.ball = Ball(Config.ball_left_start_x, Config.paddle_upper_limit, 5, -5)
+        pong.ball = Ball(Config.ball_left_start_x, 10, 5, -5, -5)
         pong.move_ball()
-        self.assertEqual(pong.ball.vx, 5)
+        self.assertEqual(pong.ball.vx, -5)
         self.assertEqual(pong.ball.vy, 5)
 
     def test_bounce_ball_against_bottom_wall(self):
@@ -70,7 +67,7 @@ class TestPong(unittest.TestCase):
         hit_paddle = pygame.mixer.Sound('pong_wall.wav')
         pong = Pong(hit_wall, hit_paddle)
 
-        pong.ball = Ball(Config.ball_left_start_x, 500 - 20, 5, 5)
+        pong.ball = Ball(Config.ball_left_start_x, 500 - 10, 5, 5)
         pong.move_ball()
         self.assertEqual(pong.ball.vx, 5)
         self.assertEqual(pong.ball.vy, -5)
@@ -80,7 +77,7 @@ class TestPong(unittest.TestCase):
         hit_paddle = pygame.mixer.Sound('pong_wall.wav')
         pong = Pong(hit_wall, hit_paddle)
 
-        pong.ball = Ball(30, 250, -5, -5)
+        pong.ball = Ball(30, 250, 5, -5, -5)
         pong.move_ball()
         self.assertEqual(pong.ball.vx, 5)
         self.assertEqual(pong.ball.vy, -5)
@@ -90,7 +87,7 @@ class TestPong(unittest.TestCase):
         hit_paddle = pygame.mixer.Sound('pong_wall.wav')
         pong = Pong(hit_wall, hit_paddle)
 
-        pong.ball = Ball(960, 250, 5, 5)
+        pong.ball = Ball(970, 250, 5, 5, 5)
         pong.move_ball()
         self.assertEqual(pong.ball.vx, -5)
         self.assertEqual(pong.ball.vy, 5)
@@ -126,7 +123,7 @@ class TestPong(unittest.TestCase):
         hit_paddle = pygame.mixer.Sound('pong_wall.wav')
         pong = Pong(hit_wall, hit_paddle)
 
-        paddle = Paddle(20, Config.paddle_upper_limit)
+        paddle = Paddle(20, 40, Config.paddle_upper_limit, Config.paddle_lower_limit)
         pong.leftPaddle = paddle
         pong.move_left_up()
         self.assertEqual(pong.leftPaddle.y, Config.paddle_upper_limit)
@@ -136,7 +133,7 @@ class TestPong(unittest.TestCase):
         hit_paddle = pygame.mixer.Sound('pong_wall.wav')
         pong = Pong(hit_wall, hit_paddle)
 
-        paddle = Paddle(20, Config.paddle_lower_limit)
+        paddle = Paddle(20, 460, Config.paddle_upper_limit, Config.paddle_lower_limit)
         pong.leftPaddle = paddle
         pong.move_left_down()
         self.assertEqual(pong.leftPaddle.y, Config.paddle_lower_limit)
